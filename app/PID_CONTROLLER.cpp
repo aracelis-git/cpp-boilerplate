@@ -14,22 +14,23 @@
 
 
 PID_CONTROLLER::PID_CONTROLLER(double Kp, double Ki, double Kd, double dt)
-	:Kp(Kp),Ki(Ki),Kd(Kd),dt(dt),error(0),integral(0) {}
+	:Kp(Kp),Ki(Ki),Kd(Kd),dt(dt),error(0),integral(0) {
+	
+  if ( Kp < 0 ) { PID_CONTROLLER::setKp(0); } 
+  if ( Ki < 0 ) { PID_CONTROLLER::setKi(0); } 
+  if ( Kd < 0 ) { PID_CONTROLLER::setKd(0); } 
+}
 
 
 
 /**
-   * @brief Ensures the gains are nonnegative and computes the new input.
+   * @brief Computes the new input.
    * @return result double
    */
 
 double PID_CONTROLLER::compute(double setPoint, double actualVelocity) {
-	
-	  if ( Kp < 0 ) { PID_CONTROLLER::Kp = 0; } 
-	  if ( Ki < 0 ) { PID_CONTROLLER::Ki = 0; } 
-	  if ( Kd < 0 ) { PID_CONTROLLER::Kd = 0; } 
     
-    double currentError = setPoint - actualVelocity; 
+    double currentError = actualVelocity - setPoint; 
     
     double result = currentError * Kp + (currentError - error) / dt * Kd + integral * Ki;
 
