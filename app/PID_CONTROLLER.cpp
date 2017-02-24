@@ -18,10 +18,20 @@ PID_CONTROLLER::PID_CONTROLLER(double Kp, double Ki, double Kd, double dt)
 
 
 
-double PID_CONTROLLER::compute(double setPoint, double actualVelocity) {
-    double result = -1;
+/**
+   * @brief Ensures the gains are nonnegative and computes the new input.
+   * @return result double.
+   */
 
-    std::cout << "Implement compute for  PID_CONTROLLER."<<std::endl;
+double PID_CONTROLLER::compute(double setPoint, double actualVelocity) {
+	
+	  if ( Kp < 0 ) { Kp = 0; } 
+	  if ( Ki < 0 ) { Ki = 0; } 
+	  if ( Kd < 0 ) { Kd = 0; } 
+    
+    double currentError = setPoint - actualVelocity; 
+    
+    double result = currentError * Kp + (currentError - error) / dt * Kd + integral * Ki;
 
 	return result;
 }
