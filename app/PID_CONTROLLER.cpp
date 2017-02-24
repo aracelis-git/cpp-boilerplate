@@ -25,15 +25,15 @@ PID_CONTROLLER::PID_CONTROLLER(double Kp, double Ki, double Kd, double dt)
 
 double PID_CONTROLLER::compute(double setPoint, double actualVelocity) {
 	
-	  if ( Kp < 0 ) { Kp = 0; } 
-	  if ( Ki < 0 ) { Ki = 0; } 
-	  if ( Kd < 0 ) { Kd = 0; } 
+	  if ( Kp < 0 ) { PID_CONTROLLER::Kp = 0; } 
+	  if ( Ki < 0 ) { PID_CONTROLLER::Ki = 0; } 
+	  if ( Kd < 0 ) { PID_CONTROLLER::Kd = 0; } 
     
     double currentError = setPoint - actualVelocity; 
     
     double result = currentError * Kp + (currentError - error) / dt * Kd + integral * Ki;
 
-	return result;
+	return currentError;
 }
 
 
