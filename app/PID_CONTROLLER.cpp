@@ -20,7 +20,7 @@ PID_CONTROLLER::PID_CONTROLLER(double Kp, double Ki, double Kd, double dt)
 
 /**
    * @brief Ensures the gains are nonnegative and computes the new input.
-   * @return result double.
+   * @return result double
    */
 
 double PID_CONTROLLER::compute(double setPoint, double actualVelocity) {
